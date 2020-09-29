@@ -9,7 +9,7 @@
   },
   "scripts": {
     "prerelease": "cross-env CI=1 npm run test",
-    "release": "np",
+    "release": "np --no-2fa",
     "build": "tib-tsc",
     "build:full": "npm ci --ignore-scripts && npm run clean && npm run build",
     "coverage": "tib-nyc report --reporter=text-summary",
