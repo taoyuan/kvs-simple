@@ -21,8 +21,8 @@ import File from 'kvs-file';
     writeDelay: 100, // ms, batch write to disk in a specific duration, enhance write performance.
     codec: {
       encode: JSON.stringify, // serialize function
-      decode: JSON.parse // deserialize function
-    }
+      decode: JSON.parse, // deserialize function
+    },
   });
 
   const bucket = await store.bucket('namespace');
