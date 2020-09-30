@@ -1,5 +1,5 @@
 {
-  "name": "kvs-file",
+  "name": "kvs-simple",
   "version": "0.2.2",
   "description": "File storage adapter for KVS",
   "main": "dist/index.js",
@@ -52,7 +52,8 @@
     "kvs": "^2.1.0",
     "kvs-testlab": "^0.2.0",
     "mocha": "^8.1.3",
-    "np": "^6.5.0"
+    "np": "^6.5.0",
+    "timekeeper": "^2.2.0"
   },
   "keywords": [
     "kvs",
