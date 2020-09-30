@@ -44,7 +44,7 @@ export class SimpleFileIO implements IO {
   }
 }
 
-export interface FileOptions {
+export interface SimpleOptions {
   io?: IO;
   ttl?: number;
   file: string;
@@ -53,7 +53,7 @@ export interface FileOptions {
   codec: Codec;
 }
 
-const DEFAULT_OPTIONS: FileOptions = {
+const DEFAULT_OPTIONS: SimpleOptions = {
   file: `${os.tmpdir()}/kvs/${Math.random().toString(36).slice(2)}.json`,
   expiresCheckInterval: 24 * 3600 * 1000,
   writeDelay: 100, // ms
@@ -69,7 +69,7 @@ export default class Simple<V = any> implements Adapter {
 
   ready: Promise<void>;
 
-  public opts: FileOptions;
+  public opts: SimpleOptions;
   public codec: Codec;
   public io: IO;
   public cache: Map<string, Data<V>>;
@@ -77,7 +77,7 @@ export default class Simple<V = any> implements Adapter {
   public saveTimer?: NodeJS.Timer;
   public savePromise?: Promise<any>;
 
-  constructor(opts?: Partial<FileOptions>) {
+  constructor(opts?: Partial<SimpleOptions>) {
     this.opts = {
       ...DEFAULT_OPTIONS,
       ...opts,
