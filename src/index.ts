@@ -1,6 +1,7 @@
-import {Adapter} from 'kvs';
 import os from 'os';
 import fs from 'fs-extra';
+import {Adapter} from 'kvs';
+import micromatch from 'micromatch';
 
 const debug = require('debug')('kvs-file');
 
@@ -50,10 +51,6 @@ export default class File<V = any> implements Adapter {
   public saveTimer?: NodeJS.Timer;
   public savePromise?: Promise<any>;
 
-  static create(opts?: FileOptions) {
-    return new File(opts);
-  }
-
   constructor(opts?: FileOptions) {
     this.opts = {
       ...DEFAULT_OPTIONS,
@@ -81,12 +78,20 @@ export default class File<V = any> implements Adapter {
   }
 
   async clear(pattern?: string): Promise<number> {
-    const size = this.cache.size;
-    this.cache = new Map();
+    pattern = pattern ?? '*';
+    let count = 0;
+    if (pattern === '*') {
+      count = this.cache.size;
+      this.cache = new Map();
+    } else
+      for (const key of await this.keys(pattern)) {
+        count += await this.del(key);
+      }
+
     this.lastCheckAt = Date.now();
     // eslint-disable-next-line no-void
     void this.save();
-    return size;
+    return count;
   }
 
   async close(): Promise<void> {
@@ -134,9 +139,13 @@ export default class File<V = any> implements Adapter {
   }
 
   async keys(pattern?: string): Promise<string[]> {
+    pattern = pattern ?? '*';
     const keys = [] as string[];
     for (const key of this.cache.keys()) {
-      if (!this.isExpired(this.cache.get(key)!)) {
+      if (
+        !this.isExpired(this.cache.get(key)!) &&
+        (micromatch.isMatch(key, pattern) || pattern === '*')
+      ) {
         keys.push(key);
       }
     }
