@@ -46,8 +46,8 @@ import File from 'kvs-simple';
     expiresCheckInterval: 24 * 3600 * 1000, // ms, check and remove expired data in each ms
     writeDelay: 100, // ms, batch write to disk in a specific duration, enhance write performance.
     io: {
-      read: async () => fs.readFileSync('data.json', 'utf8'), 
-      write: async (data) => fs.outputFile('data.json', data, 'utf8'), 
+      read: async () => fs.readFileSync('data.json', 'utf8'),
+      write: async data => fs.outputFile('data.json', data, 'utf8'),
     },
   });
 
