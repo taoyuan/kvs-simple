@@ -1,7 +1,7 @@
 {
   "name": "kvs-simple",
   "version": "0.3.0",
-  "description": "File storage adapter for KVS",
+  "description": "A kvs simple storage adapter that supports input and output",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {

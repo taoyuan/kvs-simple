@@ -1,6 +1,7 @@
 # kvs-simple
 
-> A KVS memory storage adapter that support persistent
+> A [kvs](https://github.com/taoyuan/kvs) simple storage adapter that supports
+> input and output
 
 ## Install
 
@@ -14,7 +15,7 @@ npm i kvs kvs-simple
 
 ```js
 import {Store} from 'kvs';
-import File from 'kvs-simple';
+// import Simple from 'kvs-simple';
 
 (async () => {
   const store = Store.create('simple' /* Simple */, {
@@ -39,7 +40,7 @@ import File from 'kvs-simple';
 ```js
 import fs from 'fs';
 import {Store} from 'kvs';
-import File from 'kvs-simple';
+// import Simple from 'kvs-simple';
 
 (async () => {
   const store = Store.create('simple' /* Simple */, {
