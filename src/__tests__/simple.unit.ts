@@ -46,7 +46,7 @@ describe('kvs-simple/file', function () {
       const adapter = store.adapter as Simple;
       expect(fs.existsSync(adapter.opts.file)).false();
 
-      const bucket = await store.bucket('test');
+      const bucket = store.bucket('test');
       await bucket.set(key, value);
       await delay(500);
       expect(fs.existsSync(adapter.opts.file)).true();
@@ -57,11 +57,11 @@ describe('kvs-simple/file', function () {
       let store = Store.create(Simple);
       const adapter = store.adapter as Simple;
       const file = adapter.opts.file;
-      let bucket = await store.bucket('test');
+      let bucket = store.bucket('test');
       await bucket.set(key, value);
       await delay(500);
       store = Store.create(Simple, {file});
-      bucket = await store.bucket('test');
+      bucket = store.bucket('test');
       const loaded = await bucket.get(key);
       expect(value).equal(loaded);
     });
@@ -76,7 +76,7 @@ describe('kvs-simple/file', function () {
       };
 
       const store = new Store(Simple, options);
-      const bucket = await store.bucket('test');
+      const bucket = store.bucket('test');
       await bucket.set('foo1', 'bar', 3);
       await bucket.set('foo2', 'bar');
 
@@ -86,7 +86,7 @@ describe('kvs-simple/file', function () {
       await (store.adapter as Simple).write();
 
       const store3 = new Store(Simple, options);
-      const bucket3 = await store3.bucket('test');
+      const bucket3 = store3.bucket('test');
       tk.travel(new Date(Date.now() + sec));
       expect(await bucket3.get('foo1')).equal('bar');
       expect(await bucket3.keys()).deepEqual(['foo1', 'foo2']);
